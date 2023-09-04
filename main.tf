@@ -6,5 +6,5 @@ module "network_vpc" {
 
   for_each   = var.vpc
   cidr_block = each.value.cidr_block
-  subnets_cidr = var.subnets_cidr
+  subnets_cidr = each.value.subnets_cidr
 }

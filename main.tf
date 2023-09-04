@@ -1,5 +1,4 @@
 
-
 module "network_vpc" {
   source = "github.com/chandra5141/tf-module-vpc.git"
   env= var.env
@@ -7,4 +6,5 @@ module "network_vpc" {
   for_each   = var.vpc
   cidr_block = each.value.cidr_block
   subnets_cidr = each.value.subnets_cidr
+  default_vpc_id = var.default_vpc_id
 }

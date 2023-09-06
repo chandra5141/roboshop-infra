@@ -6,7 +6,7 @@ module "network_vpc" {
   for_each        = var.vpc
   cidr_block      = each.value.cidr_block
   default_vpc_id  = var.default_vpc_id
-  public_subnets_ids     = lookup(module.subnets,"public",null), "subnets_ids",null)
+  public_subnets_ids     = lookup(lookup(module.subnets,"public",null), "subnet_ids",null)
 }
 
 module "subnets" {

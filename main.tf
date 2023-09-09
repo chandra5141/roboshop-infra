@@ -24,6 +24,6 @@ module "docdb" {
 
 }
 
-output "" {
+output "vpc" {
   value = module.network_vpc
 }

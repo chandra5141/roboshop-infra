@@ -17,7 +17,6 @@ module "network_vpc" {
 module "docdb" {
   source                    = "github.com/chandra5141/tf-module-docdb.git"
   env                       = var.env
-  default_vpc_id            = var.default_vpc_id
 
   for_each                  = var.docdb
   subnet_ids = lookup(lookup(lookup(lookup(module.network_vpc, each.value.vpc_name, null),"private_subnet_ids", null), each.value.subnets_name,null), "subnet_ids", null)

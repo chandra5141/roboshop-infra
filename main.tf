@@ -1,28 +1,22 @@
 
 module "network_vpc" {
-  source          = "github.com/chandra5141/tf-module-vpc.git"
-  env             = var.env
+  source                 = "github.com/chandra5141/tf-module-vpc.git"
+  env                    = var.env
+  default_vpc_id         = var.default_vpc_id
 
-  for_each        = var.vpc
-  cidr_block      = each.value.cidr_block
-  default_vpc_id  = var.default_vpc_id
-  public_subnets_ids     = lookup(lookup(module.subnets,"public",null), "subnet_ids",null)
+
+  for_each               = var.vpc
+  cidr_block             = each.value.cidr_block
+  public_subnets         = each.value.public_subnets
+  private_subnets        = each.value.private_subnets
+  availability_zone      = each.value.availablity_zone
+
 }
 
-module "subnets" {
-  source                    = "github.com/chandra5141/tf-module-subnets.git"
+
+module "docdb" {
+  source                    = "github.com/chandra5141/tf-module-docdb.git"
   env                       = var.env
   default_vpc_id            = var.default_vpc_id
-
-
-  for_each                  = var.subnets
-  igw                       = module.network_vpc.igw
-  cidr_block                = each.value.cidr_block
-  availability_zone         = each.value.availablity_zone
-  igw_id                    = module.network_vpc.igw_id
-  name                      = each.value.name
-  vpc_id                    = lookup(lookup(module.network_vpc,each.value.vpc_name.null),"vpc_id",null)
-  vpc_peering_connection_id = lookup(lookup(module.network_vpc,each.value.vpc_name.null),"vpc_peering_connection_id",null)
-  internet_gateway_id       = lookup(lookup(module.network_vpc,each.value.vpc_name.null),"internet_gateway_id",null)
 
 }

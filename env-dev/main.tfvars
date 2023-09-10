@@ -36,10 +36,31 @@ vpc = {
 
 docdb = {
   main = {
-  vpc_name = "main"
-    subnets_name = "db"
-    engine_version = "4.0.0"
+  vpc_name               = "main"
+    subnets_name         = "db"
+    engine_version       = "4.0.0"
     no_of_instance_docdb = 1
-    instance_class = "db.t3.medium"
+    instance_class       = "db.t3.medium"
+  }
+}
+
+rds = {
+  main = {
+    vpc_name             = "main"
+    subnets_name         = "db"
+    engine_version       = "5.7.mysql_aurora.2.11.1"
+    engine               = "aurora-mysql"
+    no_of_instance_rds   = 1
+    instance_class       = "db.t3.small"
+  }
+}
+
+elasticache = {
+  main = {
+    vpc_name                = "main"
+    subnets_name            = "db"
+    node_type               = "cache.t3.micro"
+    replicas_per_node_group = "1"
+    num_node_groups         = "2"
   }
 }

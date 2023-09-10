@@ -13,18 +13,21 @@ module "network_vpc" {
 
 }
 
-
 module "docdb" {
   source                    = "github.com/chandra5141/tf-module-docdb.git"
   env                       = var.env
 
   for_each                  = var.docdb
+  engine_version            = each.value.engine_version
   subnet_ids = lookup(lookup(lookup(lookup(module.network_vpc, each.value.vpc_name, null),"private_subnet_ids", null), each.value.subnets_name,null), "subnet_ids", null)
   vpc_id = lookup(lookup(module.network_vpc,each.value.vpc_name, null), "vpc_id", null)
   allow_cidr = lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null),"private_subnets", null), "app",null), "cidr_block", null)
+  no_of_instance_docdb = each.value.no_of_instance_docdb
+  instance_class = each.value.instance_class
 
 }
 
 output "vpc" {
   value = module.network_vpc
 }
+

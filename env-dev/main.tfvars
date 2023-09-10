@@ -38,5 +38,8 @@ docdb = {
   main = {
   vpc_name = "main"
     subnets_name = "db"
+    engine_version = "4.0.0"
+    no_of_instance_docdb = 1
+    instance_class = "db.t3.medium"
   }
 }

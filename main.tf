@@ -34,7 +34,7 @@ module "rds" {
   for_each                  = var.rds
   engine_version            = each.value.engine_version
   engine                    = each.value.engine
-  no_of_instance_rds        = each.value.no_of_instance_docdb
+  no_of_instance_rds        = each.value.no_of_instance_rds
   instance_class            = each.value.instance_class
 
   subnet_ids                = lookup(lookup(lookup(lookup(module.network_vpc, each.value.vpc_name, null),"private_subnet_ids", null), each.value.subnets_name,null), "subnet_ids", null)

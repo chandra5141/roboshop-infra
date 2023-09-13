@@ -1,5 +1,7 @@
 env = "dev"
 default_vpc_id = "vpc-024f86141cbbc02e6"
+bastion_cidr = ["172.31.82.53/32"] // from workstation to connect to by ssh app servers
+
 
 vpc = {
   main = {
@@ -62,5 +64,141 @@ elasticache = {
     num_cache_nodes         = 1
     node_type               = "cache.t3.micro"
     engine_version          = "6.x"
+  }
+}
+
+
+rabbitmq = {
+  main = {
+    vpc_name = "main"
+    engine_version = "3.10.10"
+    engine_type    = "RabbitMQ"
+    subnets_name = "db"
+    host_instance_type= "mq.t3.micro"
+    deployment_mode = "SINGLE_INSTANCE"
+
+  }
+}
+
+alb = {
+  public = {
+    vpc_name = "main"
+    subnets_type = "public_subnets_ids"
+    subnets_name = "public"
+    internal = false
+    dns_domain = "www"
+
+  }
+
+  private = {
+    vpc_name = "main"
+    subnets_type = "private_subnets_ids"
+    subnets_name = "app"
+    internal = true
+    dns_domain = ""
+  }
+}
+
+app = {
+  frontend = {
+    component = "frontend"
+    vpc_name = "main"
+    subnets_type = "private_subnets_ids"
+    subnets_name = "web"
+    app_port = 80
+    allow_cidr_subnet_types = "public_subnets"
+    allow_cidr_subnet_name = "public"
+    max_size                  = 2
+    min_size                  = 1
+    desired_capacity          = 1
+    alb                       = "public"
+    instance_type = "t3.medium"
+    listener_priority = 0
+  }
+
+  catalogue = {
+    component = "catalogue"
+    vpc_name = "main"
+    subnets_type = "private_subnets_ids"
+    subnets_name = "app"
+    app_port = 8080
+    allow_cidr_subnet_types = "private_subnets"
+    allow_cidr_subnet_name = "app"
+    max_size                  = 2
+    min_size                  = 1
+    desired_capacity          = 1
+    alb                       = "private"
+    listener_priority = 100
+    instance_type = "t3.medium"
+
+  }
+  user = {
+    component = "user"
+    vpc_name = "main"
+    subnets_type = "private_subnets_ids"
+    subnets_name = "app"
+    app_port = 8080
+    allow_cidr_subnet_types = "private_subnets"
+    allow_cidr_subnet_name = "app"
+    max_size                  = 2
+    min_size                  = 1
+    desired_capacity          = 1
+    alb                       = "private"
+    listener_priority = 101
+
+    instance_type = "t3.medium"
+
+  }
+  cart = {
+    component                = "cart"
+    vpc_name                 = "main"
+    subnets_type             = "private_subnets_ids"
+    subnets_name             = "app"
+    app_port                 = 8080
+    allow_cidr_subnet_types  = "private_subnets"
+    allow_cidr_subnet_name   = "app"
+    max_size                 = 2
+    min_size                 = 1
+    desired_capacity         = 1
+    instance_type            = "t3.medium"
+    alb                      = "private"
+    listener_priority        = 102
+
+
+  }
+  shipping = {
+    component = "shipping"
+    vpc_name = "main"
+    subnets_type = "private_subnets_ids"
+    subnets_name = "app"
+    app_port = 8080
+    allow_cidr_subnet_types = "private_subnets"
+    allow_cidr_subnet_name = "app"
+    max_size                  = 2
+    min_size                  = 1
+    desired_capacity          = 1
+    alb                       = "private"
+    listener_priority = 103
+
+    instance_type = "t3.large"
+
+  }
+
+  payment = {
+    component = "payment"
+    vpc_name = "main"
+    subnets_type = "private_subnets_ids"
+    subnets_name = "app"
+    app_port = 8080
+    allow_cidr_subnet_types = "private_subnets"
+    allow_cidr_subnet_name = "app"
+    max_size                  = 2
+    min_size                  = 1
+    desired_capacity          = 1
+    alb                       = "private"
+    listener_priority = 104
+
+    instance_type = "t3.medium"
+
   }
 }

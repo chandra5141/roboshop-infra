@@ -78,6 +78,7 @@ module "alb" {
   env    = var.env
   for_each = var.alb
   subnet_ids = lookup(lookup(lookup(lookup(module.network_vpc, each.value.vpc_name, null), each.value.subnets_type, null), each.value.subnets_name, null), "subnet_id", null )
+  // the load balancer private should allow the web subnets where frontend is hosted apps also contacting the load balancer with in app subnets as well so for both web and app subnets should be allowd by load balanncer
   allow_cidr   = each.value.internal ? concat(lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "web", null), "cidr_block", null), lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "app", null), "cidr_block", null)) : ["0.0.0.0/0"]
   //allow_cidr   = each.value.internal ? lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "web", null), "cidr_block", null) : [ "0.0.0.0/0" ]
   vpc_id = lookup(lookup(module.network_vpc, each.value.vpc_name , null), "vpc_id", null)

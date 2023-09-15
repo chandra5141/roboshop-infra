@@ -110,7 +110,7 @@ module "app" {
   listener_priority = each.value.listener_priority
 }
 
-output "vpc" {
-  value = module.network_vpc
-}
+#output "vpc" {
+#  value = module.network_vpc
+#}
 

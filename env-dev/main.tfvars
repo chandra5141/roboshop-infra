@@ -98,6 +98,8 @@ alb = {
     internal = true
     dns_domain = ""
   }
+
+  }
 }
 
 app = {

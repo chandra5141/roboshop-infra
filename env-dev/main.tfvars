@@ -1,7 +1,7 @@
 env = "dev"
 default_vpc_id = "vpc-024f86141cbbc02e6"
 bastion_cidr = ["172.31.82.53/32"] // from workstation to connect to by ssh app servers
-monitor_cidr = ["172.31.25.131/32"]
+monitor_cidr = ["172.31.23.120/32"] // prometheus server to get metrics
 
 
 vpc = {

@@ -115,7 +115,7 @@ app = {
     min_size                  = 1
     desired_capacity          = 1
     alb                       = "public"
-    instance_type = "t3.micro"
+    instance_type = "t3.medium"
     listener_priority = 0
   }
 
@@ -132,7 +132,7 @@ app = {
     desired_capacity          = 1
     alb                       = "private"
     listener_priority = 100
-    instance_type = "t3.micro"
+    instance_type = "t3.medium"
 
   }
   user = {
@@ -149,7 +149,7 @@ app = {
     alb                       = "private"
     listener_priority = 101
 
-    instance_type = "t3.micro"
+    instance_type = "t3.medium"
 
   }
   cart = {
@@ -163,7 +163,7 @@ app = {
     max_size                 = 2
     min_size                 = 1
     desired_capacity         = 1
-    instance_type            = "t3.micro"
+    instance_type            = "t3.medium"
     alb                      = "private"
     listener_priority        = 102
 
@@ -201,7 +201,7 @@ app = {
     alb                       = "private"
     listener_priority = 104
 
-    instance_type = "t3.micro"
+    instance_type = "t3.medium"
 
   }
 }
